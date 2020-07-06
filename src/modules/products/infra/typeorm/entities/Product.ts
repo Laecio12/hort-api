@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
-import Category from './Category'
+import {
+  Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn,
+} from 'typeorm';
+import Category from './Category';
 
 @Entity('products')
 class Product {
@@ -12,6 +14,9 @@ class Product {
   @Column('decimal')
   price: number;
 
+  @Column('decimal')
+  quantity: number;
+
   @Column()
   description: string;
 
@@ -22,7 +27,7 @@ class Product {
   category_id: string;
 
   @ManyToOne(() => Category)
-  @JoinColumn({name:'category_id'})
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @CreateDateColumn()
