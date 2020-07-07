@@ -12,6 +12,9 @@ class Product {
   name: string;
 
   @Column('decimal')
+  code: number;
+
+  @Column('decimal')
   price: number;
 
   @Column('decimal')
