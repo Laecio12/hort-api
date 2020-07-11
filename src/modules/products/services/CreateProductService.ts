@@ -6,6 +6,7 @@ import ICategoryRepository from '../repositories/ICategoryRepository';
 
 interface IRequest {
   name: string;
+  code: number;
   price: number;
   quantity: number;
   description: string;
@@ -25,6 +26,7 @@ class CreateProductService {
   public async execute({
     name,
     price,
+    code,
     description,
     quantity,
     categoryName,
@@ -36,10 +38,17 @@ class CreateProductService {
       throw new AppError('Product name already used');
     };
 
+    const productCode = await this.productsRepository.findByCode(code);
+
+    if (productCode) {
+      throw new AppError('Product code alredy used')
+    }
+
+
     const checkCategoryIdExixts = await this.categoryRepository.findIdByNameCategory(categoryName);
 
     if (checkCategoryIdExixts) {
-       category_id = String( checkCategoryIdExixts )
+       category_id = checkCategoryIdExixts.id;
     }else{
       throw new AppError('Category does not exists')
     }
@@ -50,6 +59,7 @@ class CreateProductService {
       quantity,
       description,
       category_id,
+      code
     });
 
     return product;

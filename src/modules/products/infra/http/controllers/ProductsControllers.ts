@@ -9,6 +9,7 @@ export default class ProductsController {
       price,
       description,
       quantity,
+      code,
       categoryName,
     } = request.body;
 
@@ -19,6 +20,7 @@ export default class ProductsController {
       price,
       description,
       quantity,
+      code,
       categoryName
     });
 

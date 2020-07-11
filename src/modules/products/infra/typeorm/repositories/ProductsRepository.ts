@@ -19,6 +19,16 @@ class ProductRepository implements IProductRepository {
     return product;
   };
 
+  public async findByCode(code: number): Promise<Product | undefined> {
+    const product = await this.ormRepository.findOne({
+      where: {
+        code,
+      },
+    });
+
+    return product;
+  }
+
   public async findAllProducts(): Promise<Product[] | undefined> {
     let products: Product[];
 

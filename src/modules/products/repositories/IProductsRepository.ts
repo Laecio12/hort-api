@@ -3,6 +3,7 @@ import ICreateProductDTO from '../dtos/ICreateProductDTO';
 
 export default interface IProductRepository {
   findByName(name: string): Promise<Product | undefined>;
+  findByCode(code: number): Promise<Product | undefined>;
   create(productData: ICreateProductDTO): Promise<Product>;
   save(product: Product): Promise<Product>;
   findAllProducts(): Promise<Product[] | undefined>;
