@@ -6,7 +6,7 @@ import ICategoryRepository from '../repositories/ICategoryRepository';
 
 interface IRequest {
   name: string;
-  code: number;
+  code?: number;
   price: number;
   quantity: number;
   description: string;
@@ -26,24 +26,27 @@ class CreateProductService {
   public async execute({
     name,
     price,
-    code,
     description,
+    code,
     quantity,
     categoryName,
     category_id
   }: IRequest): Promise<Product> {
     const checkProductExists = await this.productsRepository.findByName(name);
 
-    if(checkProductExists) {
+    if(checkProductExists ) {
       throw new AppError('Product name already used');
     };
 
-    const productCode = await this.productsRepository.findByCode(code);
+    const findCode = await this.productsRepository.findByCode();
 
-    if (productCode) {
-      throw new AppError('Product code alredy used')
+    if( findCode ) {
+      code = findCode.code + 1;
+    }else{
+      code = 1;
     }
 
+    console.log(code);
 
     const checkCategoryIdExixts = await this.categoryRepository.findIdByNameCategory(categoryName);
 
@@ -59,7 +62,7 @@ class CreateProductService {
       quantity,
       description,
       category_id,
-      code
+      code,
     });
 
     return product;

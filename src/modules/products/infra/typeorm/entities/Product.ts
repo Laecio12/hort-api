@@ -1,6 +1,16 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column, ManyToOne,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+
 } from 'typeorm';
+
+import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
+
 import Category from './Category';
 
 @Entity('products')
@@ -11,7 +21,7 @@ class Product {
   @Column()
   name: string;
 
-  @Column('decimal')
+  @Column('int')
   code: number;
 
   @Column('decimal')
@@ -32,6 +42,9 @@ class Product {
   @ManyToOne(() => Category)
   @JoinColumn({ name: 'category_id' })
   category: Category;
+
+  @OneToMany(() => OrdersProducts, ordersProducts => ordersProducts.product)
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;

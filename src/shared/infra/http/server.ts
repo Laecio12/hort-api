@@ -8,7 +8,7 @@ import '@shared/container';
 // import uploadConfig from '@config/upload';
 // import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 import AppError from '@shared/errors/AppError';
-// import { errors } from 'celebrate';
+import { errors } from 'celebrate';
 import routes from './routes';
 
 const app = express();
@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 // app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(routes);
-// app.use(errors());
+app.use(errors());
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (err instanceof AppError) {
